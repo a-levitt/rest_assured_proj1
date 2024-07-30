@@ -1,5 +1,6 @@
 package alevitt;
 
+import files.ReusableMethods;
 import files.payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -35,7 +36,8 @@ public class MapsAutomatization {
         ;
 
         // parsing Json from String
-        JsonPath js = new JsonPath(response);
+        //JsonPath js = new JsonPath(response);
+        JsonPath js = ReusableMethods.rawToJson(response);
         String placeId = js.getString("place_id");
 
 
@@ -76,9 +78,9 @@ public class MapsAutomatization {
                 .extract().response().asString()
         ;
 
-        JsonPath js1 = new JsonPath(getPlaceResponse);
-        String actualAdress = js1.getString("address");
-        Assert.assertEquals(actualAdress, newAddress); // TestNG
+        JsonPath js1 = ReusableMethods.rawToJson(getPlaceResponse);
+        String actualAddress = js1.getString("address");
+        Assert.assertEquals(actualAddress, newAddress); // TestNG
 
     }
 }
