@@ -2,6 +2,9 @@ package alevitt;
 
 import files.payload;
 import io.restassured.RestAssured;
+
+import java.util.Arrays;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
@@ -10,6 +13,7 @@ public class MapsAutomatization {
 
         RestAssured.baseURI = "https://rahulshettyacademy.com";
 
+        String response =
         given()
                 .log().all()
                 .queryParam("key", "qaclick123")
@@ -18,11 +22,14 @@ public class MapsAutomatization {
         .when()
                 .post("maps/api/place/add/json")
         .then()
-                .log().all()
+                //.log().all()
                 .assertThat()
                     .statusCode(200)
                     .body("scope", equalTo("APP"))
                     .header("Server", equalTo("Apache/2.4.52 (Ubuntu)")) // ("Server", "value")
+                .extract().response().asString()
         ;
+
+        System.out.println(response);
     }
 }
