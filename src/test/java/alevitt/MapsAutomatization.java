@@ -34,6 +34,26 @@ public class MapsAutomatization {
         // parsing Json from String
         JsonPath js = new JsonPath(response);
         String placeId = js.getString("place_id");
-        System.out.println(placeId);
+
+
+        // Update place
+        given()
+                .log().all()
+                .queryParam("key", "qaclick123")
+                .header("Content-Type", "application/json")
+                .body("{\r\n" +
+                        "             \"place_id\": \"" + placeId + "\",\r\n" +
+                        "             \"address\": \"70 Summer walk, USA\",\r\n" +
+                        "             \"key\": \"qaclick123\"\r\n" +
+                        " }\r\n" +
+                        " ")
+        .when()
+                .put("maps/api/place/update/json")
+        .then()
+                .log().all()
+                .assertThat()
+                    .statusCode(200)
+                    .body("msg", equalTo("Address successfully updated"))
+        ;
     }
 }

@@ -19,7 +19,7 @@ public class payload {
                         "             ],\r\n" +
                         "             \"website\": \"http://rahulshettyacademy.com\",\r\n" +
                         "             \"language\": \"French-IN\"\r\n" +
-                        "          }\r\n" +
-                        "     ";
+                " }\r\n" +
+                " ";
     }
 }
