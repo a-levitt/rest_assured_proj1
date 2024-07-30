@@ -3,6 +3,7 @@ package alevitt;
 import files.payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import org.testng.Assert;
 
 import java.util.Arrays;
 
@@ -39,13 +40,14 @@ public class MapsAutomatization {
 
 
         // Update place
+        String newAddress = "70 Summer walk, USA";
         given()
                 .log().all()
                 .queryParam("key", "qaclick123")
                 .header("Content-Type", "application/json")
                 .body("{\r\n" +
                         "             \"place_id\": \"" + placeId + "\",\r\n" +
-                        "             \"address\": \"70 Summer walk, USA\",\r\n" +
+                        "             \"address\": \"" + newAddress + "\",\r\n" +
                         "             \"key\": \"qaclick123\"\r\n" +
                         " }\r\n" +
                         " ")
@@ -59,6 +61,7 @@ public class MapsAutomatization {
         ;
 
         // Get place
+        String getPlaceResponse =
         given()
                 .log().all()
                 .queryParam("key", "qaclick123")
@@ -69,7 +72,13 @@ public class MapsAutomatization {
                 .log().all()
                 .assertThat()
                     .statusCode(200)
-                    .body("address", equalTo("70 Summer walk, USA"))
+                    //.body("address", equalTo(newAddress))
+                .extract().response().asString()
         ;
+
+        JsonPath js1 = new JsonPath(getPlaceResponse);
+        String actualAdress = js1.getString("address");
+        Assert.assertEquals(actualAdress, newAddress); // TestNG
+
     }
 }
