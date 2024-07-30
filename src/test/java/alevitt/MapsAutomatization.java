@@ -2,6 +2,7 @@ package alevitt;
 
 import files.payload;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 
 import java.util.Arrays;
 
@@ -30,6 +31,9 @@ public class MapsAutomatization {
                 .extract().response().asString()
         ;
 
-        System.out.println(response);
+        // parsing Json from String
+        JsonPath js = new JsonPath(response);
+        String placeId = js.getString("place_id");
+        System.out.println(placeId);
     }
 }
