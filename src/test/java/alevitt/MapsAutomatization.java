@@ -37,6 +37,7 @@ public class MapsAutomatization {
                 .assertThat()
                     .statusCode(200)
                     .body("scope", equalTo("APP"))
+                    .header("Server", equalTo("Apache/2.4.52 (Ubuntu)")) // ("Server", "value")
         ;
     }
 }
