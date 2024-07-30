@@ -2,6 +2,7 @@ package alevitt;
 
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class MapsAutomatization {
     public static void main(String[] args) {
@@ -33,6 +34,9 @@ public class MapsAutomatization {
                 .post("maps/api/place/add/json")
         .then()
                 .log().all()
-                .assertThat().statusCode(200);
+                .assertThat()
+                    .statusCode(200)
+                    .body("scope", equalTo("APP"))
+        ;
     }
 }
