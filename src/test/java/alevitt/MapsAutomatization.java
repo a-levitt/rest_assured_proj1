@@ -81,6 +81,5 @@ public class MapsAutomatization {
         JsonPath js1 = ReusableMethods.rawToJson(getPlaceResponse);
         String actualAddress = js1.getString("address");
         Assert.assertEquals(actualAddress, newAddress); // TestNG
-
     }
 }
